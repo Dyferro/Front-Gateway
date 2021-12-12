@@ -1,0 +1,39 @@
+<div>
+    <div class="container">
+        <h2 class="text-muted text-center">Available Gateways</h2>
+        <p class="text-center">To see more information about a specific gateway and its associated devices click on the <i class="material-icons">info</i> button</p>
+        <div class="container p-2">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th> Serial Number</th>
+                        <th> Name</th>
+                        <th> IPv4 Address</th>
+                        <th> Associated Peripherical Devices</th>
+                        <th> Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gateway of gatewayService.gateways">
+                        <td>{{gateway.serial_number}}</td>
+                        <td>{{gateway.hr_name}}</td>
+                        <td>{{gateway.ip_address}}</td>
+                        <td>{{gateway.associated_peripheral?.length}}</td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" (click)="infoGateway(gateway)">
+                        <i class="material-icons">info</i>
+                      </button>
+                            <button type="button" class="btn btn-primary" (click)="deleteGateway(gateway._id!)">
+                        <i class="material-icons">delete</i>
+                      </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn btn-primary rounded-circle float-end" (click)="getCreateGateway()"><i class="material-icons">add</i> </button>
+    </div>
+
+</div>

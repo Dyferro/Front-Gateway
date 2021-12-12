@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-dark mb-3">
+            <h1 class="navbar-brand text-white mb-0 h1">Gateway</h1>
+        </div>
+        <div class="card-body p-2">
+            <form #gatewayForm="ngForm">
+                <div class="row p-2">
+                    <div class="col-md-4 p-3">
+                        <div class="form-group p-2">
+                            <input type="text" name="serial_number" [(ngModel)]="gatewayService.gateway.serial_number" class="form-control" placeholder="Gateway Serial Number" readonly>
+                        </div>
+                        <div class="form-group p-2">
+                            <input type=" text " name="hr_name" [(ngModel)]="gatewayService.gateway.hr_name" class="form-control " placeholder="Human-readable Name " readonly>
+                        </div>
+                        <div class="form-group p-2">
+                            <input type="text " name="ip_address" [(ngModel)]="gatewayService.gateway.ip_address" class="form-control " placeholder="IPv4 Address " readonly>
+                        </div>
+                        <div class="form-group p-3 row">
+                            <div class="col-md-1"><input type="checkbox" name="checkbox" [(ngModel)]="checkbox"> </div>
+                            <div class="col"><small class="form-text">Add associated peripheral devices</small></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="text-muted text-center">
+                            <h3>
+                                Associated Peripheral Devices
+                            </h3>
+
+                        </div>
+                        <div class="p-2">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> UID</th>
+                                        <th> Vendor</th>
+                                        <th> Date Created</th>
+                                        <th> Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let associated_peripheral of gatewayService.gateway.associated_peripheral">
+                                        <td>{{associated_peripheral.uid}}</td>
+                                        <td>{{associated_peripheral.vendor}}</td>
+                                        <td>{{associated_peripheral.date_created}}</td>
+                                        <td>{{associated_peripheral.status?'online':'offline'}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" (click)="deleteDevice(gatewayService.gateway,gatewayService.gateway.associated_peripheral.indexOf(associated_peripheral))">
+                                          <i class="material-icons">delete</i>
+                                        </button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <div class="p-2 ">
+                                    <div class="p-2 divhidetxtdpatien" *ngIf="checkbox">
+                                        <div class="card-header  bg-dark mb-3">
+                                            <h1 class="navbar-brand text-center text-white mb-0 h1">Add Associated Device</h1>
+                                        </div>
+                                        <div class="card-body p-2">
+                                            <div class="container p-3 row justify-content-center align-items-center">
+                                                <form #deviceForm="ngForm" (ngSubmit)="addDevice(gatewayService.gateway,deviceForm)">
+                                                    <div class="row">
+                                                        <div class="form-group p-2 col">
+                                                            <input id="uid" type="number" name="uid" required [(ngModel)]="gatewayService.device.uid" class="form-control" placeholder="UID">
+                                                        </div>
+                                                        <div class="form-group p-2 col">
+                                                            <input id="vendor" type=" text " name="vendor" required [(ngModel)]="gatewayService.device.vendor" class="form-control " placeholder="Vendor">
+                                                        </div>
+                                                        <div class="form-group p-2 col">
+                                                            <input type="date " id="date_created" name="date_created" required [(ngModel)]="gatewayService.device.date_created" class="form-control" placeholder="Date">
+                                                        </div>
+                                                        <div class="form-group p-2 col text-center">
+                                                            <label>
+                                                      <input class="form-check-input" type="checkbox" name="status" [(ngModel)]="gatewayService.device.status"> Online</label>
+                                                        </div>
+                                                        <div class="form-group p-2 col">
+                                                            <button class="btn btn-primary rounded-circle float-end"><i class="material-icons">add</i> </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

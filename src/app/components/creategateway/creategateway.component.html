@@ -1,0 +1,118 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-dark mb-3">
+            <h1 class="navbar-brand text-white mb-0 h1 text-center"> Gateway Add Form</h1>
+        </div>
+
+        <div class="card-body p-2">
+            <form #gatewayForm="ngForm" (ngSubmit)="validatingGateway(gatewayForm)">
+                <div class="row p-2">
+                    <div class="col-md-3 p-3">
+                        <div class="form-group p-2">
+                            <input type="text" name="serial_number" required [(ngModel)]="gatewayService.gateway.serial_number" class="form-control" placeholder="Gateway Serial Number">
+                            <div *ngIf="ip_address?.errors?.['required']"><small class="form-text text-danger">*Required field</small></div>
+                        </div>
+                        <div class="form-group p-2">
+                            <input type=" text " name="hr_name" required [(ngModel)]="gatewayService.gateway.hr_name" class="form-control " placeholder="Human-readable Name ">
+                            <div *ngIf="ip_address?.errors?.['required']"><small class="form-text text-danger">*Required field</small></div>
+                        </div>
+                        <div class="form-group p-2">
+                            <input type="text " name="ip_address" required [(ngModel)]="gatewayService.gateway.ip_address" class="form-control " placeholder="IPv4 Address" #ip_address="ngModel">
+                            <div *ngIf="ip_address?.errors?.['required']"><small class="form-text text-danger">*Required field</small></div>
+                        </div>
+                        <div class="form-group p-3 row">
+                            <div class="col-md-1"><input type="checkbox" name="checkbox" [(ngModel)]="checkbox"> </div>
+                            <div class="col"><small class="form-text">Add associated peripheral devices</small></div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="text-muted text-center">
+                            <h3>
+                                Associated Peripheral Devices
+                            </h3>
+
+                        </div>
+                        <div>
+                            <div class="p-2">
+                                <table class="table table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th> UID</th>
+                                            <th> Vendor</th>
+                                            <th> Date Created</th>
+                                            <th> Status</th>
+                                            <th> Operations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let associated_peripheral of devices">
+                                            <td>{{associated_peripheral.uid}}</td>
+                                            <td>{{associated_peripheral.vendor}}</td>
+                                            <td>{{associated_peripheral.date_created}}</td>
+                                            <td>{{associated_peripheral.status?'online':'offline'}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" (click)="deleteDevice(devices.indexOf(associated_peripheral))">
+                                          <i class="material-icons">delete</i>
+                                        </button>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="p-2 divhidetxtdpatien" *ngIf="checkbox">
+                            <div class="card t" id="add-peripheral">
+                                <div class="card-header  bg-dark mb-3">
+                                    <h1 class="navbar-brand text-center text-white mb-0 h1">Add Associated Device</h1>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="container p-3 row justify-content-center align-items-center">
+                                        <form #deviceForm="ngForm" (ngSubmit)="addDevice(deviceForm)">
+                                            <div class="row">
+                                                <div class="form-group p-2 col">
+                                                    <input id="uid" type="number" required name="uid" [(ngModel)]="gatewayService.device.uid" class="form-control" placeholder="UID">
+                                                </div>
+                                                <div class="form-group p-2 col">
+                                                    <input id="vendor" type=" text " required name="vendor" [(ngModel)]="gatewayService.device.vendor" class="form-control " placeholder="Vendor">
+                                                </div>
+                                                <div class="form-group p-2 col">
+                                                    <input type="date" id="date_created" required name="date_created" [(ngModel)]="gatewayService.device.date_created" class="form-control" placeholder="Date">
+                                                </div>
+                                                <div class="form-group p-2 col text-center">
+                                                    <label>
+                                          <input class="form-check-input" type="checkbox" name="status" [(ngModel)]="gatewayService.device.status"> Online</label>
+                                                </div>
+                                                <div class="form-group p-2 col">
+                                                    <button class="btn btn-primary rounded-circle float-end"><i class="material-icons">add</i> </button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+                <!--Saving the new Gateway-->
+                <div class="float-end p-3 ">
+                    <button type="submit " class="btn btn-primary p-2 ">Save Gateway</button>
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+</div>
